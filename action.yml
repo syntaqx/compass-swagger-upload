@@ -8,7 +8,6 @@ inputs:
   compass-url:
     description: 'The Compass URL to upload to'
     required: true
-secrets:
   compass-api-user:
     required: true
   compass-api-token:
@@ -20,7 +19,7 @@ runs:
     run: |-
       http_response=$(curl -s -o response.txt -w "%{http_code}" -X PUT \
         -F file=@${{ inputs.swagger-file }} \
-        --user "${{ secrets.compass_api_user }}:${{ secrets.compass_api_token }}" \
+        --user "${{ inputs.compass_api_user }}:${{ inputs.compass_api_token }}" \
         "${{ inputs.compass-url }}")
 
       jq '.' response.txt
