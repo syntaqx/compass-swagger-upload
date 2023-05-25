@@ -19,7 +19,7 @@ runs:
     run: |-
       http_response=$(curl -s -o response.txt -w "%{http_code}" -X PUT \
         -F file=@${{ inputs.swagger-file }} \
-        --user "${{ inputs.compass_api_user }}:${{ inputs.compass_api_token }}" \
+        --user "${{ inputs.compass-api-user }}:${{ inputs.compass-api-token }}" \
         "${{ inputs.compass-url }}")
 
       jq '.' response.txt
