@@ -1,0 +1,29 @@
+name: 'Compass Swagger Upload'
+description: 'Upload Swagger JSON to Atlassian Compass'
+inputs:
+  swagger-file:
+    description: 'The filepath to the swagger file'
+    required: false
+    default: 'api-docs.json'
+  compass-url:
+    description: 'The Compass URL to upload to'
+    required: true
+secrets:
+  compass-api-user:
+    required: true
+  compass-api-token:
+    required: true
+runs:
+  using: 'composite'
+  steps:
+  - shell: bash
+    run: |-
+      http_response=$(curl -s -o response.txt -w "%{http_code}" -X PUT \
+        -F file=@${{ inputs.swagger-file }} \
+        --user "${{ secrets.compass_api_user }}:${{ secrets.compass_api_token }}" \
+        "${{ inputs.compass-url }}")
+
+      jq '.' response.txt
+      if [ "$http_response" != "200" ]; then
+        exit 1
+      fi
