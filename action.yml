@@ -9,8 +9,10 @@ inputs:
     description: 'The Compass URL to upload to'
     required: true
   compass-api-user:
+    description: 'The Compass API User'
     required: true
   compass-api-token:
+    description: 'The Compass API Token'
     required: true
 runs:
   using: 'composite'
